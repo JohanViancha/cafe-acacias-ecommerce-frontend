@@ -27,8 +27,8 @@ export default function StepThree() {
       <>
         <CheckCircleIcon color="error" sx={{ fontSize: 65 }} />
 
-        <Typography variant="h4" fontWeight={700} mt={2} color="primary">
-          ¡Transacción rechazada!
+        <Typography variant="h4" fontWeight={700} mt={2} color="error">
+          ¡Transacción fallida!
         </Typography>
         <Typography color="text.secondary">
           Hemos tenido problemas con el pago de tu compra☕
@@ -42,7 +42,7 @@ export default function StepThree() {
       <>
         <CheckCircleIcon color="info" sx={{ fontSize: 65 }} />
 
-        <Typography variant="h4" fontWeight={700} mt={2} color="primary">
+        <Typography variant="h4" fontWeight={700} mt={2} color="info">
           ¡La transacción está procesando!
         </Typography>
         <Typography color="text.secondary">
@@ -73,7 +73,7 @@ export default function StepThree() {
       <Box sx={{ textAlign: "center", mb: 4 }}>
         {state === "approved"
           ? approveState()
-          : state === "rejectd"
+          : state === "rejectd" || state === 'failed'
           ? rejectedState()
           : state === "processing"
           ? processingState()
