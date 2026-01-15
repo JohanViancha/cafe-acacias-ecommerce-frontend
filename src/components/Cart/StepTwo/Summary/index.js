@@ -97,11 +97,11 @@ export default function Summary({ products, addressSelected }) {
         currency: currency,
         integritySignature: order.hashIntegraty,
         amount: order.totalPayment,
-        redirectionUrl: "https://micomercio.com/pagos/resultado",
+        redirectionUrl: "https://cafe-acacias.up.railway.app/cart?step=2",
       });
-      // checkout.open();
 
-      cartCtrl.deleteAll()
+      checkout.open();
+      cartCtrl.deleteAll();
 
       router.replace({
         query: {
