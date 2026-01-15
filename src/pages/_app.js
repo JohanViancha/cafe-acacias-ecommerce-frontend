@@ -12,7 +12,6 @@ export default function App({ Component, pageProps }) {
             <Component {...pageProps} />
           </ThemeProvider>
         </CartProvider>
-        <script src="https://checkout.bold.co/library/boldPaymentButton.js"></script>
       </AuthProvider>
     </>
   );

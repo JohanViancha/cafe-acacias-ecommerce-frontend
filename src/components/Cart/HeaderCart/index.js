@@ -1,10 +1,20 @@
 "use client";
 
-import { AppBar, Box, Step, StepLabel, Stepper, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Step,
+  StepLabel,
+  Stepper,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CheckIcon from "@mui/icons-material/Check";
 import { useRouter } from "next/router";
+import CoffeeIcon from "@mui/icons-material/Coffee";
+import NextLink from "next/link";
 
 const steps = [
   { label: "Carrito", icon: ShoppingCartIcon },
@@ -31,16 +41,29 @@ export default function HeaderCart() {
         }}
       >
         <Toolbar sx={{ minHeight: 80 }}>
-          <Box sx={{ width: "100%" }}>
+          <Box display="flex" alignItems="center" gap={1}>
+            <CoffeeIcon />
+            <Typography
+              variant="h6"
+              component={NextLink}
+              href="/"
+              sx={{
+                color: "inherit",
+                textDecoration: "none",
+                fontWeight: "bold",
+              }}
+            >
+              Café Las Acacias
+            </Typography>
+          </Box>
+          <Box sx={{ width: "60%", margin:"auto" }}>
             <Stepper alternativeLabel activeStep={activeStep}>
               {steps.map((step, index) => {
                 const Icon = step.icon;
                 const isActive = index === activeStep;
 
                 return (
-                  <Step
-                    key={step.label}
-                  >
+                  <Step key={step.label}>
                     <StepLabel
                       sx={{
                         "& .MuiStepLabel-label": {

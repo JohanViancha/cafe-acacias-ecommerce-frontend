@@ -17,7 +17,7 @@ export default function ListAddresses(props) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await addressCtrl.getAll(user.id);
+        const response = await addressCtrl.getAll(user.documentId);
         setAddresses(response.data);
       } catch (error) {
         console.error(error);

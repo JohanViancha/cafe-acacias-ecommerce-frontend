@@ -7,8 +7,12 @@ import {
   Tooltip,
 } from "@mui/material";
 import NoResult from "../NoResult";
+import { useRouter } from "next/router";
 
 export default function SearchList({ results, openResults, setValue }) {
+
+  const router = useRouter()
+
   return (
     openResults && (
       <Paper
@@ -30,7 +34,7 @@ export default function SearchList({ results, openResults, setValue }) {
               <ListItemButton
                 key={item.id}
                 onClick={() => {
-                  router.push(`/products/${item.documentId}`);
+                  router.push(`/${item.slug}`);
                   setValue("");
                 }}
               >

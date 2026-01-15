@@ -4,7 +4,7 @@ export class Product {
   async getLastPublished() {
     try {
       const sort = "sort=publishedAt:desc";
-      const pagination = "pagination[limit]=4";
+      const pagination = "pagination[limit]=3";
       const populate = "populate=*";
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PRODUCT}?${sort}&${pagination}&${populate}`;
 

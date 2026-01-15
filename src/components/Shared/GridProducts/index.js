@@ -21,8 +21,7 @@ function GridProducts({ products }) {
         <Grid
           key={p.id}
           item
-          size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
-          sx={{ ":hover": { scale: 1.1 } }}
+          size={{ xs: 12, sm: 6, md: 4, lg: 4 }}
         >
           <Badge
             badgeContent={discount(p.discount)}
@@ -32,36 +31,37 @@ function GridProducts({ products }) {
               "& .MuiBadge-badge": {
                 minWidth: 28,
                 height: 30,
-                fontSize: "1rem",
+                fontSize: "0.8rem",
                 fontWeight: "bold",
-                px: 1.5,
-                py: 1.5,
+                px: 1,
+                py: 0.5,
               },
             }}
           >
             <Card
               sx={{
-                maxWidth: 350,
+                maxWidth: 400,
                 minHeight: 300,
-                borderRadius: 3,
+                borderRadius: 2,
                 backgroundColor: "background.paper",
               }}
             >
-              <CardActionArea sx={{ p: 2 }} href={`/${p.slug}`}>
+              <CardActionArea sx={{ p: 1 }} href={`/${p.slug}`}>
                 <CardMedia
                   component="img"
                   height="140"
                   image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVT5CDqK9ZPmXDXseMYPOXV75T1PFG8kkk9g&s"
                   alt="green iguana"
-                  sx={{ borderRadius: 3 }}
+                  sx={{ borderRadius: 2 }}
                 />
                 <CardContent sx={{ p: 1 }}>
                   <Tooltip title={p.title} arrow>
                     <Typography
                       gutterBottom
-                      variant="h6"
+                      variant="subtitle2"
                       component="div"
                       sx={{
+                        fontWeight:"600",
                         display: "-webkit-box",
                         WebkitLineClamp: 1,
                         WebkitBoxOrient: "vertical",

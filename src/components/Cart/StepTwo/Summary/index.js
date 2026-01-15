@@ -98,19 +98,13 @@ export default function Summary({ products, addressSelected }) {
         integritySignature: order.hashIntegraty,
         amount: order.totalPayment,
         redirectionUrl: "https://cafe-acacias.up.railway.app/cart?step=2",
+        originUrl: "https://cafe-acacias.up.railway.app",
+        renderMode: 'embedded',
       });
 
       checkout.open();
-      cartCtrl.deleteAll();
 
-      router.replace({
-        query: {
-          ...router.query,
-          step: 2,
-          "bold-order-id": order.idPayment,
-          "bold-tx-status": "approved",
-        },
-      });
+      cartCtrl.deleteAll();
     } catch (error) {
       console.log(error);
     }
