@@ -17,7 +17,6 @@ export function AuthProvider(props) {
     (async () => {
       const token = tokenCtrl.getToken();
       if (!token || tokenCtrl.hasExpired(token)) {
-        logout();
         setLoading(false);
         return;
       }

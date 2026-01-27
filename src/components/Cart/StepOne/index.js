@@ -1,6 +1,7 @@
 "use client";
 
 import NoResult from "@/components/Shared/NoResult";
+import { useAuth } from "@/hooks";
 import { useCart } from "@/hooks/useCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -30,6 +31,7 @@ export default function StepOne({ products = [] }) {
     return <NoResult text={"No hay productos en el carrito de compras"} />;
 
   const router = useRouter();
+  const { user } = useAuth();
 
   const { changeQuantityItem, deleteItem } = useCart();
 
@@ -42,13 +44,16 @@ export default function StepOne({ products = [] }) {
           (product.discount * (product.price * product.quantity)) / 100,
       };
     },
-    { subtotal: 0, discount: 0 }
+    { subtotal: 0, discount: 0 },
   );
 
   const total = summary.subtotal - summary.discount;
 
+  const goToLogin = () => router.push("/join/login");
+
   const goToStepTwo = () => {
-    router.replace({ query: { ...router.query, step: 1 } });
+    if (!user) goToLogin();
+    else router.replace({ query: { ...router.query, step: 1 } });
   };
 
   return (
@@ -138,7 +143,7 @@ export default function StepOne({ products = [] }) {
                       <Typography fontWeight={600} color="primary.main">
                         $
                         {(product.price * product.quantity).toLocaleString(
-                          "es-CO"
+                          "es-CO",
                         )}
                       </Typography>
                     </TableCell>

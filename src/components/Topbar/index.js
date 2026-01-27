@@ -71,11 +71,10 @@ const productCtrl = new Product();
 
 export default function TopBar({ isOpenSearch }) {
   const { user } = useAuth();
-  const { total } = useCart()
+  const { total } = useCart();
   const router = useRouter();
 
-
-  const goToLogin = () => router.push("/join/sign-in");
+  const goToLogin = () => router.push("/join/login");
   const goToAccount = () => router.push("/account");
   const [value, setValue] = useState("");
   const [results, setResults] = useState([]);
@@ -83,8 +82,7 @@ export default function TopBar({ isOpenSearch }) {
   const [debouncedValue, setDebouncedValue] = useState("");
 
   const goToCart = () => {
-    if (!user) goToLogin();
-    else router.push("/cart");
+    router.push("/cart");
   };
 
   useEffect(() => {
