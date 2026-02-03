@@ -1,33 +1,36 @@
 "use client";
 
-import Menu from "@/components/Menu";
+import { Product } from "@/api/product";
+import MenuApp from "@/components/Menu";
 import { useAuth } from "@/hooks";
-import CoffeeIcon from "@mui/icons-material/Coffee";
-import PersonIcon from "@mui/icons-material/Person";
+import SearchList from "../Shared/SearchList";
+import { useCart } from "@/hooks/useCart";
 import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CloseIcon from "@mui/icons-material/Close";
+import PersonIcon from "@mui/icons-material/Person";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import {
   alpha,
   AppBar,
+  Badge,
   Box,
-  Button,
+  Container,
+  Drawer,
   IconButton,
+  List,
   InputBase,
-  Stack,
   Toolbar,
   Typography,
+  useScrollTrigger,
 } from "@mui/material";
-import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
-import NextLink from "next/link";
+
 import { useRouter } from "next/router";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
-import SearchList from "../Shared/SearchList";
-import { Product } from "@/api/product";
-import { useCart } from "@/hooks/useCart";
+import Image from "next/image";
+import Logo from "@/assets/logo.png";
 
-
-// 🔍 Estilos del contenedor del buscador
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -80,6 +83,12 @@ export default function TopBar({ isOpenSearch }) {
   const [results, setResults] = useState([]);
   const [openResults, setOpenResults] = useState(false);
   const [debouncedValue, setDebouncedValue] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 50,
+  });
 
   const goToCart = () => {
     router.push("/cart");
@@ -109,64 +118,119 @@ export default function TopBar({ isOpenSearch }) {
   };
 
   return (
-    <AppBar position="fixed" color="primary" elevation={1}>
-      <Toolbar>
-        {/* LOGO */}
-        <Box display="flex" alignItems="center" gap={1}>
-          <CoffeeIcon />
-          <Typography
-            variant="h6"
-            component={NextLink}
-            href="/"
-            sx={{
-              color: "inherit",
-              textDecoration: "none",
-              fontWeight: "bold",
-            }}
+    <>
+      <AppBar
+        position="fixed"
+        sx={{
+          bgcolor: trigger ? "primary.main" : "rgba(58, 47, 38, 0.95)",
+          backdropFilter: "blur(8px)",
+          transition: "background-color 0.3s ease",
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar
+            disableGutters
+            sx={{ height: { xs: 64, md: 80 }, justifyContent: "space-between" }}
           >
-            Café Las Acacias
-          </Typography>
+            {/* Logo */}
+            <Image alt="Logo" width={80} priority src={Logo} href="/" />
+
+            {isOpenSearch && (
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  onChange={(e) => setValue(e.target.value)}
+                  placeholder="Buscar productos…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+
+                <SearchList
+                  results={results}
+                  openResults={openResults}
+                  setValue={setValue}
+                />
+              </Search>
+            )}
+
+            {/* Desktop Navigation */}
+
+            <MenuApp />
+
+            {/* Actions */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <IconButton
+                sx={{
+                  color: "rgba(255, 255, 255, 0.8)",
+                  "&:hover": { color: "white" },
+                }}
+                onClick={user ? goToAccount : goToLogin}
+              >
+                <PersonIcon />
+              </IconButton>
+              <IconButton
+                sx={{
+                  color: "rgba(255, 255, 255, 0.8)",
+                  "&:hover": { color: "white" },
+                }}
+                onClick={goToCart}
+              >
+                <Badge
+                  badgeContent={total}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      bgcolor: "hsl(18, 45%, 45%)",
+                      color: "white",
+                      fontSize: "0.625rem",
+                      fontWeight: 700,
+                    },
+                  }}
+                >
+                  <ShoppingBagIcon />
+                </Badge>
+              </IconButton>
+
+              {/* Mobile Menu Button */}
+              <IconButton
+                sx={{
+                  display: { md: "none" },
+                  color: "primary.contrastText",
+                }}
+                onClick={() => setDrawerOpen(true)}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        disableScrollLock
+        onClose={() => setDrawerOpen(false)}
+        PaperProps={{
+          sx: {
+            width: 280,
+            bgcolor: "primary.main",
+          },
+        }}
+      >
+        <Box sx={{ p: 2, display: "flex", justifyContent: "flex-end" }}>
+          <IconButton
+            onClick={() => setDrawerOpen(false)}
+            sx={{ color: "primary.contrastText" }}
+          >
+            <CloseIcon />
+          </IconButton>
         </Box>
-
-        {/* BUSCADOR */}
-        {isOpenSearch && (
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              onChange={(e) => setValue(e.target.value)}
-              placeholder="Buscar productos…"
-              inputProps={{ "aria-label": "search" }}
-            />
-
-            <SearchList
-              results={results}
-              openResults={openResults}
-              setValue={setValue}
-            />
-          </Search>
-        )}
-
-        <Box sx={{ flexGrow: 1 }} />
-
-        {/* MENÚ DE OPCIONES */}
-        <Stack>
-          <Box display="flex" alignItems="center" gap={2}>
-            <Menu />
-            <IconButton color="inherit" onClick={goToCart}>
-              <Badge badgeContent={total} color="secondary">
-                <ShoppingCartIcon color="inherit" />
-              </Badge>
-            </IconButton>
-          </Box>
-        </Stack>
-        <Box>
-          <Button color="inherit" onClick={user ? goToAccount : goToLogin}>
-            <PersonIcon />
-          </Button>
-        </Box>
-      </Toolbar>
-    </AppBar>
+        <List>
+          <MenuApp isMobile setDrawerOpen={setDrawerOpen} />
+        </List>
+      </Drawer>
+    </>
   );
 }

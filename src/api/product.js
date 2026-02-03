@@ -4,7 +4,7 @@ export class Product {
   async getLastPublished() {
     try {
       const sort = "sort=publishedAt:desc";
-      const pagination = "pagination[limit]=3";
+      const pagination = "pagination[limit]=4";
       const populate = "populate=*";
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PRODUCT}?${sort}&${pagination}&${populate}`;
 
@@ -83,7 +83,7 @@ export class Product {
   async getBySlug(slug) {
     try {
       const filters = `filters[slug][$eq]=${slug}`;
-      const populate = `populate[0]=wallpaper&populate[1]=cover&populate&populate[3]=category&populate[4]=category.icon`;
+      const populate = `populate[0]=category`;
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PRODUCT}?${filters}&${populate}`;
 
       const response = await fetch(url);
@@ -99,9 +99,26 @@ export class Product {
 
   async getProductById(id) {
     try {
-      const populate = `populate[0]=cover&populate[1]=category`;
+      const populate = `populate[0]=category`;
 
       const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PRODUCT}/${id}?${populate}`;
+      const response = await fetch(url);
+      const result = await response.json();
+
+      if (response.status !== 200) throw result;
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getProducts(){
+
+      try {
+      const populate = `populate[0]=category`;
+
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PRODUCT}?${populate}`;
       const response = await fetch(url);
       const result = await response.json();
 

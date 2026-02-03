@@ -4,20 +4,18 @@ import { Box } from "@mui/material";
 import TopBar from "@/components/Topbar";
 import Footer from "@/components/Footer";
 
-export default function BasicLayout({ children, isOpenSearch = false }) {
+export default function BasicLayout({ children }) {
   return (
     <>
       <Box
         display="flex"
         flexDirection="column"
-        minHeight="100vh"
         bgcolor="background.default"
-        width="80%"
-        margin="auto"
+        mt={10}
       >
         <TopBar isOpenSearch />
 
-        <Box component="main" pt={10} flexGrow={1} pb={2} px={2}>
+        <Box component="main" flexGrow={1}>
           {children}
         </Box>
       </Box>

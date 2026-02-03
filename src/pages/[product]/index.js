@@ -1,5 +1,3 @@
-"use client";
-
 import { Product } from "@/api/product";
 import BasicLayout from "@/layouts/BasicLayout";
 import CoffeeIcon from "@mui/icons-material/Coffee";
@@ -26,15 +24,14 @@ import WishListIcon from "@/components/Shared/Wishlisticon";
 import { useEffect, useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import Seo from "@/components/Shared/Seo";
+import Image from "next/image";
 
 export default function ProductPage({ product }) {
   const [quantity, setQuantity] = useState(1);
   const [tabValue, setTabValue] = useState(0);
   const [price, setPrice] = useState(0);
   const { addCart } = useCart();
-  const SHIPPING_COST = 6000;
   const subtotal = price * quantity;
-  const total = subtotal + SHIPPING_COST;
 
   const additionalInfo = [
     { label: "Origen", value: "Lebrija, Santander - Colombia" },
@@ -47,9 +44,9 @@ export default function ProductPage({ product }) {
 
   useEffect(() => {
     if (product?.discount || product.discount > 0) {
-      setPrice(product?.price - product?.discount);
+      setPrice(product?.price - (product?.price * product?.discount) / 100);
     } else {
-      setPrice(0);
+      setPrice(product?.price);
     }
   }, []);
 
@@ -61,21 +58,26 @@ export default function ProductPage({ product }) {
     <>
       <Seo title={`${product.title}`} description={`${product.summary}`} />
       <BasicLayout>
-        <Box sx={{ maxWidth: 1200, mx: "auto", py: 4 }}>
+        <Box sx={{ maxWidth: 1200, mx: "auto", py: 4, px: 2 }}>
           <Grid container spacing={4}>
             {/* Imagen */}
 
             <Grid size={{ xs: 12, md: 6 }}>
               <Box
-                component="img"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVT5CDqK9ZPmXDXseMYPOXV75T1PFG8kkk9g&s"
-                alt={product.title}
                 sx={{
+                  position: "relative",
                   width: "100%",
-                  borderRadius: 3,
-                  boxShadow: 3,
+                  height: { xs: 250, sm: 350, md: 450 },
                 }}
-              />
+              >
+                <Image
+                  fill
+                  src={`/${product.image}`}
+                  alt={product.title}
+                  style={{ objectFit: "cover", borderRadius: '10px' }}
+                  priority
+                />
+              </Box>
             </Grid>
 
             {/* Información */}
@@ -86,10 +88,10 @@ export default function ProductPage({ product }) {
                   icon={<CoffeeIcon />}
                   label={product.category.title.replace("-", " ")}
                   color="primary"
-                  sx={{ width: "fit-content" }}
+                  sx={{ width: "fit-content", px: 1 }}
                 />
                 {/* Nombre */}
-                <Typography variant="h4" fontWeight={700} color="text.primary">
+                <Typography variant="h5" fontWeight={600} color="text.primary">
                   {product.title}
                 </Typography>
                 {/* Precio */}
@@ -102,7 +104,7 @@ export default function ProductPage({ product }) {
                 >
                   {price > 0 && (
                     <Typography
-                      variant="body1"
+                      variant="h6"
                       sx={{
                         textDecoration: product.discount
                           ? "line-through"
@@ -130,7 +132,7 @@ export default function ProductPage({ product }) {
                 </Typography>
                 {/* Características */}
                 <Stack direction="row" spacing={1}>
-                  <Chip label={product.presentation || "Grano / Molido"} />
+                  <Chip label={product.category.title || "Grano / Molido"} />
                   <Chip label="100% Artesanal" />
                 </Stack>
                 {/* Cantidad */}
@@ -154,15 +156,6 @@ export default function ProductPage({ product }) {
                 <Divider />
                 <Stack spacing={1}>
                   <Stack direction="row" justifyContent="space-between">
-                    <Typography color="text.secondary">Domicilio</Typography>
-                    <Typography color="primary">
-                      ${SHIPPING_COST.toLocaleString("es-CO")}
-                    </Typography>
-                  </Stack>
-
-                  <Divider />
-
-                  <Stack direction="row" justifyContent="space-between">
                     <Typography
                       variant="h6"
                       fontWeight={700}
@@ -171,7 +164,7 @@ export default function ProductPage({ product }) {
                       Total
                     </Typography>
                     <Typography variant="h6" fontWeight={700} color="primary">
-                      ${total.toLocaleString("es-CO")}
+                      ${subtotal.toLocaleString("es-CO")}
                     </Typography>
                   </Stack>
                 </Stack>
@@ -216,9 +209,7 @@ export default function ProductPage({ product }) {
           {/* CONTENIDO */}
           <Box sx={{ mt: 2 }}>
             {tabValue === 0 && (
-              <Typography color="text.secondary">
-                {product.description}
-              </Typography>
+              <Typography color="text.secondary">{product.summary}</Typography>
             )}
 
             {tabValue === 1 && (
@@ -279,8 +270,11 @@ export async function getServerSideProps(context) {
     params: { product },
   } = context;
 
+  console.log(product);
   const productCtrl = new Product();
   const response = await productCtrl.getBySlug(product);
+
+  console.log(response);
 
   return {
     props: {

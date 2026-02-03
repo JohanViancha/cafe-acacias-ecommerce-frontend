@@ -24,6 +24,7 @@ import {
   Typography,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function StepOne({ products = [] }) {
@@ -103,15 +104,20 @@ export default function StepOne({ products = [] }) {
                   <TableRow key={product.id} hover>
                     <TableCell>
                       <Box
-                        component="img"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVT5CDqK9ZPmXDXseMYPOXV75T1PFG8kkk9g&s"
-                        alt={product.title}
                         sx={{
-                          width: "70px",
-                          borderRadius: 3,
-                          boxShadow: 3,
+                          position: "relative",
+                          width: 80,
+                          height: 80,
                         }}
-                      />
+                      >
+                        <Image
+                          fill
+                          src={`/${product.image}`}
+                          alt={product.title}
+                          style={{ objectFit: "cover", borderRadius: "5px" }}
+                          priority
+                        />
+                      </Box>
                     </TableCell>
 
                     <TableCell>

@@ -1,6 +1,6 @@
 export const ENV = {
-  SERVER_HOST: "https://cafe-acacias.up.railway.app",
-  API_URL: "https://cafe-acacias-ecommerce.up.railway.app/api",
+  SERVER_HOST: "http://localhost:3000",
+  API_URL: "http://localhost:1337/api",
   ENDPOINTS: {
     AUTH: {
       REGISTER: "auth/local/register",

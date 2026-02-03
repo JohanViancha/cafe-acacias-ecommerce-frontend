@@ -14,7 +14,7 @@ function CategoryPage({ category, products, pagination }) {
     <>
     <Seo title={`Categoria ${category.title}`}/>
       <BasicLayout>
-        <Box mb={6}>
+        <Box p={10} >
           <Typography
             variant="h5"
             fontWeight={700}
