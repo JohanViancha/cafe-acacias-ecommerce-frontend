@@ -1,50 +1,56 @@
 "use client";
 
+import Seo from "@/components/Shared/Seo";
 import JoinLayout from "@/layouts/JoinLayout";
 import {
   Box,
   Button,
-  Link,
+  IconButton,
+  InputAdornment,
   TextField,
   Typography,
-  InputAdornment,
-  IconButton,
   Stack,
 } from "@mui/material";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { Auth } from "@/api";
-import NextLink from "next/link";
-import { useAuth } from "@/hooks";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Seo from "@/components/Shared/Seo";
+import { useFormik } from "formik";
+import { useState } from "react";
+import * as Yup from "yup";
+import { Auth } from "@/api";
+import { useRouter } from "next/router";
 import BasicModal from "@/components/Shared/BasicModal";
 
 const authCtrl = new Auth();
-export default function Login() {
+
+export default function ResetPasswordPage() {
+  const { query, push } = useRouter();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
   const toggleModal = () => setShowModal((prevState) => !prevState);
 
+  const confirmChange = () => {
+    toggleModal();
+    router.push("/");
+  };
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
 
   const initialValues = () => {
     return {
-      identifier: "",
       password: "",
+      passwordConfirmation: "",
     };
   };
 
   const validationSchema = () => {
     return Yup.object({
-      identifier: Yup.string().required(true),
       password: Yup.string().required(true),
+      passwordConfirmation: Yup.string().required(true),
     });
   };
   const formik = useFormik({
@@ -53,14 +59,9 @@ export default function Login() {
     validateOnChange: false,
     onSubmit: async (formValues) => {
       try {
-        const { jwt } = await authCtrl.login(formValues);
-        login(jwt);
-        router.push("/");
+        await authCtrl.resetPassword({ ...formValues, code: query.code });
       } catch (error) {
         console.error(error);
-        if (error["error"]["status"] === 400) {
-          toggleModal();
-        }
       }
     },
   });
@@ -71,7 +72,6 @@ export default function Login() {
       <JoinLayout>
         <Box
           component="form"
-          autoComplete="off"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -81,18 +81,9 @@ export default function Login() {
           onSubmit={formik.handleSubmit}
         >
           <Typography variant="h6" textAlign="center">
-            Iniciar Sesión
+            Restablecer contraseña
           </Typography>
 
-          <TextField
-            placeholder="Correo electronico o nombre de usuario"
-            label="Usuario"
-            name="identifier"
-            type="text"
-            fullWidth
-            onChange={formik.handleChange}
-            error={formik.errors.identifier}
-          />
           <TextField
             label="Contraseña"
             fullWidth
@@ -121,22 +112,37 @@ export default function Login() {
             }}
           />
 
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Ingresar
-          </Button>
+          <TextField
+            label="Confirmar contraseña"
+            fullWidth
+            name="passwordConfirmation"
+            onChange={formik.handleChange}
+            error={formik.errors.passwordConfirmation}
+            type={showConfirmPassword ? "text" : "password"}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={
+                        showPassword
+                          ? "hide the password"
+                          : "display the password"
+                      }
+                      onClick={handleClickShowConfirmPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
+            }}
+          />
 
-          <Box display="flex" justifyContent="space-between">
-            <Link component={NextLink} href="/join/register" underline="hover">
-              Crear cuenta
-            </Link>
-            <Link
-              component={NextLink}
-              href="/join/forgot-password"
-              underline="hover"
-            >
-              ¿Olvidaste tu contraseña?
-            </Link>
-          </Box>
+          <Button type="submit" variant="contained" color="primary" fullWidth>
+            Cambiar contraseña
+          </Button>
         </Box>
       </JoinLayout>
 
@@ -149,10 +155,10 @@ export default function Login() {
         >
           <Stack gap={2}>
             <Typography variant="body2" fontWeight={"600"} my={1}>
-              El usuario y/o contraseña son incorrectos
+              La contraseña ha sido cambiada
             </Typography>
-            <Button variant="contained" color="primary" onClick={toggleModal}>
-              Confirmar
+            <Button variant="contained" color="primary" onClick={confirmChange}>
+              Ok
             </Button>
           </Stack>
         </BasicModal>

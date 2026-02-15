@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks";
 import { Box, Container, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Logo from "@/assets/logo.png";
 
 export default function JoinLayout({ children }) {
   const router = useRouter();
@@ -41,14 +42,14 @@ export default function JoinLayout({ children }) {
             gap={2}
           >
             <Image
-              src="/cafe.jpg"
+              src={Logo}
               alt="Logo del Café"
               width={100}
               height={100}
               style={{ borderRadius: "50%" }}
             />
             <Typography variant="h5" fontWeight="bold" color="primary">
-              Coffee Shop
+              Cafe Las Acacias
             </Typography>
             {children}
           </Box>

@@ -5,6 +5,8 @@ export const ENV = {
     AUTH: {
       REGISTER: "auth/local/register",
       LOGIN: "auth/local",
+      FORGOTPASSWORD: 'auth/forgot-password',
+      RESETPASSWORD: 'auth/reset-password'
     },
     USERME: "users/me",
     USERS: "users",

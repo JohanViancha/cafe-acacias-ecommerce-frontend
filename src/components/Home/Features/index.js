@@ -19,7 +19,7 @@ const features = [
   },
   {
     icon: Spa,
-    title: '100% Orgánico',
+    title: '100% Artesanal',
     description: 'Cultivado sin pesticidas ni químicos. Solo café puro de la montaña.',
   },
   {

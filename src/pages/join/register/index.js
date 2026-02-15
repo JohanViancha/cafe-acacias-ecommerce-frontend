@@ -81,7 +81,7 @@ export default function RegisterPage() {
             error={formik.errors.lastName}
           />
           <TextField
-            label="Username"
+            label="Usuario"
             name="username"
             value={formik.values.username}
             fullWidth

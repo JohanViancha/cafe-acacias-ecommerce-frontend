@@ -296,8 +296,7 @@ const Products = () => {
         {/* Hero Section */}
         <Box
           sx={{
-            pt: { xs: 12, md: 16 },
-            pb: { xs: 6, md: 8 },
+            py: 6,
             bgcolor: "primary.main",
             color: "primary.contrastText",
           }}
@@ -306,7 +305,7 @@ const Products = () => {
             <Typography
               variant="overline"
               sx={{
-                color: customColors.accent,
+                color: customColors.cream,
                 letterSpacing: "0.2em",
                 fontWeight: 500,
                 display: "block",

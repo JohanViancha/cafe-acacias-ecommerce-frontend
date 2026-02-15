@@ -35,7 +35,7 @@ const Hero = () => {
         {/* Image */}
         <Image
           src={heroImage}
-          alt="Finca cafetera en las montañas de Lebrija, Santander"
+          alt="Café Las Acacias, 100% Artesanal"
           fill
           priority
           sizes="100vw"
@@ -100,10 +100,10 @@ const Hero = () => {
               fontWeight: 600,
             }}
           >
-            Café de Finca,
+            Café Las Acacias, 
             <br />
             <Box component="span" sx={{ fontStyle: 'italic' }}>
-              Directo a Tu Taza
+            100% Artesanal  
             </Box>
           </Typography>
 
@@ -184,7 +184,7 @@ const Hero = () => {
             sx={{ pt: 4 }}
           >
             {[
-              { value: '100%', label: 'Artesanal' },
+              { value: '100%', label: 'Natural' },
               { value: '1,400m', label: 'Altitud' },
               { value: '+10', label: 'Años de Tradición' },
             ].map((item) => (
