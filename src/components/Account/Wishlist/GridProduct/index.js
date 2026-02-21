@@ -1,17 +1,19 @@
+import WishListIcon from "@/components/Shared/Wishlisticon";
+import { useAuth } from "@/hooks";
 import {
+  Box,
   Card,
+  CardActionArea,
+  CardActions,
   CardContent,
   CardMedia,
   Grid,
-  Typography,
-  Box,
-  Link,
-  CardActionArea,
-  CardActions,
+  Typography
 } from "@mui/material";
-import WishListIcon from "@/components/Shared/Wishlisticon";
 
 export default function GridProduct({ wishlist, onReload }) {
+  const { user } = useAuth();
+
   return (
     <Grid container spacing={3}>
       {wishlist.map(({ product }) => (
@@ -58,11 +60,13 @@ export default function GridProduct({ wishlist, onReload }) {
               </CardContent>
             </CardActionArea>
             <CardActions sx={{ px: 3 }}>
-              <WishListIcon
-                productId={product.documentId}
-                removeCallback={onReload}
-                label={"Eliminar"}
-              />
+              {user && (
+                <WishListIcon
+                  productId={product.documentId}
+                  removeCallback={onReload}
+                  label={"Eliminar"}
+                />
+              )}
             </CardActions>
           </Card>
         </Grid>

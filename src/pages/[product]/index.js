@@ -25,8 +25,11 @@ import { useEffect, useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import Seo from "@/components/Shared/Seo";
 import Image from "next/image";
+import { useAuth } from "@/hooks";
 
 export default function ProductPage({ product }) {
+  const { user } = useAuth();
+
   const [quantity, setQuantity] = useState(1);
   const [tabValue, setTabValue] = useState(0);
   const [price, setPrice] = useState(0);
@@ -74,7 +77,7 @@ export default function ProductPage({ product }) {
                   fill
                   src={`/${product.image}`}
                   alt={product.title}
-                  style={{ objectFit: "cover", borderRadius: '10px' }}
+                  style={{ objectFit: "cover", borderRadius: "10px" }}
                   priority
                 />
               </Box>
@@ -178,7 +181,7 @@ export default function ProductPage({ product }) {
                     gap: 2,
                   }}
                 >
-                  <WishListIcon productId={product.documentId} />
+                  {user && <WishListIcon productId={product.documentId} />}
 
                   <Button
                     variant="contained"

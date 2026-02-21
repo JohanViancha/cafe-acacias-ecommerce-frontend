@@ -22,7 +22,6 @@ const ProductCard = ({
   discount,
   origin = "Lebrija",
 }) => {
-  console.log(image);
 
   const formatPrice = (value) =>
     new Intl.NumberFormat("es-CO", {

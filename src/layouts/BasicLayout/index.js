@@ -11,7 +11,7 @@ export default function BasicLayout({ children }) {
         display="flex"
         flexDirection="column"
         bgcolor="background.default"
-        mt={10}
+        mt={8}
       >
         <TopBar isOpenSearch />
 
