@@ -62,7 +62,7 @@ const Products = () => {
 
   if (!products || !categories) return null;
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery,   setSearchQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [roast, setRoast] = useState("all");
   const [sortBy, setSortBy] = useState("featured");
@@ -93,8 +93,8 @@ const Products = () => {
       const query = searchQuery.toLowerCase();
       result = result.filter(
         (p) =>
-          p.name.toLowerCase().includes(query) ||
-          p.description.toLowerCase().includes(query),
+          p.title.toLowerCase().includes(query) ||
+          p.summary.toLowerCase().includes(query),
       );
     }
 
@@ -202,35 +202,6 @@ const Products = () => {
                 "&:hover": {
                   bgcolor:
                     category === cat.title ? "primary.dark" : "action.hover",
-                },
-              }}
-            />
-          ))}
-        </Box>
-      </Box>
-
-      {/* Roast Level Filter */}
-      <Box>
-        <Typography variant="subtitle2" fontWeight={600} mb={1.5}>
-          Nivel de Tostado
-        </Typography>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-          {roastLevels.map((level) => (
-            <Chip
-              key={level.value}
-              label={level.label}
-              onClick={() => setRoast(level.value)}
-              variant={roast === level.value ? "filled" : "outlined"}
-              sx={{
-                borderColor: roast === level.value ? "primary.main" : "divider",
-                bgcolor: roast === level.value ? "primary.main" : "transparent",
-                color:
-                  roast === level.value
-                    ? "primary.contrastText"
-                    : "text.primary",
-                "&:hover": {
-                  bgcolor:
-                    roast === level.value ? "primary.dark" : "action.hover",
                 },
               }}
             />
