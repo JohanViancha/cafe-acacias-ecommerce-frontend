@@ -267,31 +267,19 @@ const Products = () => {
         {/* Hero Section */}
         <Box
           sx={{
-            py: 6,
+            pt: 4,
+            pb:3,
             bgcolor: "primary.main",
             color: "primary.contrastText",
           }}
         >
           <Container maxWidth="xl">
             <Typography
-              variant="overline"
-              sx={{
-                color: customColors.cream,
-                letterSpacing: "0.2em",
-                fontWeight: 500,
-                display: "block",
-                mb: 2,
-              }}
-            >
-              Nuestra Selección
-            </Typography>
-            <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: "2.5rem", md: "3.5rem" },
+                fontSize: { xs: "1.5rem", md: "2rem" },
                 fontFamily: '"Playfair Display", serif',
                 fontWeight: 600,
-                mb: 2,
               }}
             >
               Todos los Productos
@@ -299,13 +287,11 @@ const Products = () => {
             <Typography
               variant="body1"
               sx={{
-                maxWidth: 600,
                 opacity: 0.85,
                 lineHeight: 1.8,
               }}
             >
-              Descubre nuestra colección completa de cafés de origen,
-              cuidadosamente cultivados y tostados en las montañas de Lebrija.
+              Descubre nuestra colección completa de cafés cuidadosamente cultivados y tostados en las montañas de Lebrija.
             </Typography>
           </Container>
         </Box>

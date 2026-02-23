@@ -25,7 +25,7 @@ export default function Wishlist() {
   }, [reload]);
 
   return !wishlist || wishlist.length === 0 ? (
-    <NoResult text="No tienes ningun juego en la lista de deseos" />
+    <NoResult text="No tienes ningun producto en la lista de deseos" />
   ) : (
     <GridProduct wishlist={wishlist} onReload={onReload} />
   );

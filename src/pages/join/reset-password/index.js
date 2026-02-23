@@ -23,7 +23,7 @@ import BasicModal from "@/components/Shared/BasicModal";
 const authCtrl = new Auth();
 
 export default function ResetPasswordPage() {
-  const { query, push } = useRouter();
+  const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

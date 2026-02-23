@@ -11,8 +11,10 @@ import {
 } from "@mui/material";
 import { ShoppingBag } from "@mui/icons-material";
 import { customColors } from "@/theme/theme";
+import { useCart } from "@/hooks/useCart";
 
 const ProductCard = ({
+  documentId,
   title,
   summary,
   price,
@@ -22,6 +24,11 @@ const ProductCard = ({
   discount,
   origin = "Lebrija",
 }) => {
+  const { addCart } = useCart();
+
+  const addCartWrapper = () => {
+    addCart(documentId, 1);
+  };
 
   const formatPrice = (value) =>
     new Intl.NumberFormat("es-CO", {
@@ -110,78 +117,79 @@ const ProductCard = ({
             <ShoppingBag />
           </IconButton>
         </Box>
-
-        {/* ================= CONTENT ================= */}
-        <CardContent sx={{ flexGrow: 1, p: 3 }}>
-          <Chip
-            size="small"
-            label={`Origen ${origin}`}
-            sx={{
-              bgcolor: `${customColors.nature}15`,
-              color: customColors.nature,
-              fontSize: "0.7rem",
-              fontWeight: 500,
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              mb: 1.5,
-            }}
-          />
-
-          <Typography
-            sx={{
-              fontFamily: '"Playfair Display", serif',
-              fontSize: "1.1rem",
-              fontWeight: 500,
-              lineHeight: 1.3,
-              mb: 1,
-            }}
-          >
-            {title}
-          </Typography>
-
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              mb: 2,
-            }}
-          >
-            {summary}
-          </Typography>
-
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 2 }}>
-            <Typography fontWeight={600}>{formatPrice(price)}</Typography>
-            {originalPrice && (
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ textDecoration: "line-through" }}
-              >
-                {formatPrice(originalPrice)}
-              </Typography>
-            )}
-          </Box>
-
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{
-              bgcolor: "secondary.main",
-              color: "secondary.contrastText",
-              "&:hover": {
-                bgcolor: "primary.main",
-                color: "primary.contrastText",
-              },
-            }}
-          >
-            Agregar al Carrito
-          </Button>
-        </CardContent>
       </CardActionArea>
+
+      {/* ================= CONTENT ================= */}
+      <CardContent sx={{ flexGrow: 1, p: 3 }}>
+        <Chip
+          size="small"
+          label={`Origen ${origin}`}
+          sx={{
+            bgcolor: `${customColors.nature}15`,
+            color: customColors.nature,
+            fontSize: "0.7rem",
+            fontWeight: 500,
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
+            mb: 1.5,
+          }}
+        />
+
+        <Typography
+          sx={{
+            fontFamily: '"Playfair Display", serif',
+            fontSize: "1.1rem",
+            fontWeight: 500,
+            lineHeight: 1.3,
+            mb: 1,
+          }}
+        >
+          {title}
+        </Typography>
+
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            mb: 2,
+          }}
+        >
+          {summary}
+        </Typography>
+
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 2 }}>
+          <Typography fontWeight={600}>{formatPrice(price)}</Typography>
+          {originalPrice && (
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ textDecoration: "line-through" }}
+            >
+              {formatPrice(originalPrice)}
+            </Typography>
+          )}
+        </Box>
+
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{
+            bgcolor: "secondary.main",
+            color: "secondary.contrastText",
+            "&:hover": {
+              bgcolor: "primary.main",
+              color: "primary.contrastText",
+            },
+          }}
+          onClick={addCartWrapper}
+        >
+          Agregar al Carrito
+        </Button>
+      </CardContent>
     </Card>
   );
 };

@@ -133,7 +133,7 @@ export default function TopBar({ isOpenSearch }) {
             sx={{ height: { xs: 64, md: 80 }, justifyContent: "space-between" }}
           >
             {/* Logo */}
-            <Image alt="Logo" width={80} priority src={Logo} href="/" />
+            <Image alt="Logo" width={70} priority src={Logo} href="/" />
 
             {isOpenSearch && (
               <Search>

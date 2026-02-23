@@ -17,7 +17,7 @@ export default function StepTwo({ products }) {
       <Grid container spacing={4}>
         {/* 🟦 IZQUIERDA */}
         <Grid size={{ xs: 12, sm: 12, md: 6, lg: 7, xl: 8 }}>
-          <AddressSelected
+        <AddressSelected
             addressSelected={addressSelected}
             setAddressSelected={setAddressSelected}
           />

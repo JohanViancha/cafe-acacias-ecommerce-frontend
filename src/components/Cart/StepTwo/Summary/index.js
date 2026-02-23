@@ -129,7 +129,7 @@ export default function Summary({ products, addressSelected }) {
                 <Box>
                   <Typography fontWeight={600}>{product.title}</Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {product.category.title}
+                    {product?.category?.title}
                   </Typography>
                 </Box>
 

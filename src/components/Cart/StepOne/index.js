@@ -26,10 +26,23 @@ import {
 import IconButton from "@mui/material/IconButton";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Cart from "@/assets/cart-empty.png";
 
 export default function StepOne({ products = [] }) {
   if (!products?.length)
-    return <NoResult text={"No hay productos en el carrito de compras"} />;
+    return (
+      <Box>
+        <NoResult
+          subtitle="Tu carrito está vacío"
+          text={
+            "Parece que aún no has añadido nada. ¡Empieza a explorar y encuentra algo que te guste!"
+          }
+          image={Cart}
+          actionText="Continuar comprando"
+          redirectAction="./products"
+        />
+      </Box>
+    );
 
   const router = useRouter();
   const { user } = useAuth();

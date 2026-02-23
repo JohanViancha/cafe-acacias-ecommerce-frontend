@@ -89,7 +89,7 @@ export default function ProductPage({ product }) {
                 {/* Categoría */}
                 <Chip
                   icon={<CoffeeIcon />}
-                  label={product.category.title.replace("-", " ")}
+                  label={product?.category?.title.replace("-", " ")}
                   color="primary"
                   sx={{ width: "fit-content", px: 1 }}
                 />
@@ -135,7 +135,7 @@ export default function ProductPage({ product }) {
                 </Typography>
                 {/* Características */}
                 <Stack direction="row" spacing={1}>
-                  <Chip label={product.category.title || "Grano / Molido"} />
+                  <Chip label={product?.category?.title || "Grano / Molido"} />
                   <Chip label="100% Artesanal" />
                 </Stack>
                 {/* Cantidad */}
@@ -273,11 +273,8 @@ export async function getServerSideProps(context) {
     params: { product },
   } = context;
 
-  console.log(product);
   const productCtrl = new Product();
   const response = await productCtrl.getBySlug(product);
-
-  console.log(response);
 
   return {
     props: {

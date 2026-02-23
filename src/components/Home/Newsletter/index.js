@@ -8,7 +8,6 @@ const Newsletter = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Newsletter signup:', email);
     setEmail('');
   };
 
