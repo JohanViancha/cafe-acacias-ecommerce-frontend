@@ -4,7 +4,7 @@ import { Typography, Stack, Button } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function NoResult({
+export default function NoResult({children,
   subtitle = "",
   text = "",
   redirectAction = "",
@@ -14,13 +14,13 @@ export default function NoResult({
   const router = useRouter();
   return (
     <Stack justifyContent={"center"} alignItems={"center"}>
-      {image && <Image src={image} width={300} height={300} />}
+      {image && <Image src={image} width={250} height={250} />}
 
       <Stack gap={3} alignItems={"center"}>
         <Typography variant="h6" fontWeight={"bold"}>
           {subtitle}
         </Typography>
-        <Typography variant="body2" color="text.primary" textAlign="center">
+        <Typography variant="body2" color="text.primary" textAlign="center" p={2}>
           {text}
         </Typography>
         {actionText && (
@@ -39,6 +39,7 @@ export default function NoResult({
             {actionText}
           </Button>
         )}
+        {children}
       </Stack>
     </Stack>
   );

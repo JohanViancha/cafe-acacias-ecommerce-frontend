@@ -26,10 +26,11 @@ import { useCart } from "@/hooks/useCart";
 import Seo from "@/components/Shared/Seo";
 import Image from "next/image";
 import { useAuth } from "@/hooks";
+import { useNotify } from "@/contexts";
 
 export default function ProductPage({ product }) {
   const { user } = useAuth();
-
+  const { notify } = useNotify()
   const [quantity, setQuantity] = useState(1);
   const [tabValue, setTabValue] = useState(0);
   const [price, setPrice] = useState(0);
@@ -55,6 +56,7 @@ export default function ProductPage({ product }) {
 
   const addCartWrapper = () => {
     addCart(product.documentId, quantity);
+    notify("Se ha agregado un producto al carrito de compras", "success")
   };
 
   return (

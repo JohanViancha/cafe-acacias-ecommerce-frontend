@@ -1,22 +1,25 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 import BasicModal from "@/components/Shared/BasicModal/index";
 import AddressForm from "@/components/Account/Address/AddressForm/index";
 
+function AddAddress({ onReload, textButton = "Crear" }) {
+  const [show, setShow] = useState(false);
 
-function AddAddress({onReload}) {
-
-  const [show, setShow] = useState(false)
-
-  const onToggleModal = () => setShow((prevState)=> !prevState)
+  const onToggleModal = () => setShow((prevState) => !prevState);
 
   return (
     <>
-      <Button type="submit" onClick={onToggleModal} variant="contained" color="primary">
-        Crear
+      <Button
+        type="submit"
+        onClick={onToggleModal}
+        variant="contained"
+        color="primary"
+      >
+        {textButton}
       </Button>
 
-      <BasicModal show={show} onClose={onToggleModal} title="Nueva dirección">
+      <BasicModal show={show} onClose={onToggleModal} title="Nueva dirección" width={600}>
         <AddressForm onClose={onToggleModal} onReload={onReload} />
       </BasicModal>
     </>

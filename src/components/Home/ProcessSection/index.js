@@ -36,6 +36,7 @@ const steps = [
 const ProcessSection = () => {
   return (
     <Box
+      id="process"
       component="section"
       sx={{
         py: { xs: 10, md: 14 },
@@ -94,72 +95,71 @@ const ProcessSection = () => {
             <Box
               key={step.number}
               p={2}
-              
               sx={{
                 position: "relative",
                 textAlign: "center",
                 "&:hover .step-icon": {
                   color: "primary.main",
                 },
-                  bgcolor: "rgba(255, 255, 255, 0.2)",
+                bgcolor: "rgba(255, 255, 255, 0.2)",
               }}
             >
               {/* Connector Line */}
 
-                {/* Number */}
-                <Typography
-                  variant="h2"
-                  sx={{
-                    color: `${customColors.harvest}50`,
-                    fontWeight: 300,
-                    fontSize: "3.5rem",
-                    mb: 2,
-                  }}
-                >
-                  {step.number}
-                </Typography>
+              {/* Number */}
+              <Typography
+                variant="h2"
+                sx={{
+                  color: `${customColors.harvest}50`,
+                  fontWeight: 300,
+                  fontSize: "3.5rem",
+                  mb: 2,
+                }}
+              >
+                {step.number}
+              </Typography>
 
-                {/* Icon */}
-                <Avatar
-                  className="step-icon"
-                  sx={{
-                    width: 64,
-                    height: 64,
-                    mx: "auto",
-                    mb: 3,
-                    bgcolor: "rgba(255, 255, 255, 0.1)",
-                    color: customColors.harvest,
-                    transition: "all 0.3s ease",
-                  }}
-                >
-                  <step.icon sx={{ fontSize: 28 }} />
-                </Avatar>
+              {/* Icon */}
+              <Avatar
+                className="step-icon"
+                sx={{
+                  width: 64,
+                  height: 64,
+                  mx: "auto",
+                  mb: 3,
+                  bgcolor: "rgba(255, 255, 255, 0.1)",
+                  color: customColors.harvest,
+                  transition: "all 0.3s ease",
+                }}
+              >
+                <step.icon sx={{ fontSize: 28 }} />
+              </Avatar>
 
-                {/* Title */}
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontFamily: '"Playfair Display", serif',
-                    fontWeight: 500,
-                    mb: 2,
-                  }}
-                >
-                  {step.title}
-                </Typography>
+              {/* Title */}
+              <Typography
+                variant="h5"
+                sx={{
+                  fontFamily: '"Playfair Display", serif',
+                  fontWeight: 500,
+                  mb: 2,
+                }}
+              >
+                {step.title}
+              </Typography>
 
-                {/* Description */}
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "rgba(255, 255, 255, 0.7)",
-                    lineHeight: 1.7,
-                    maxWidth: 280,
-                    mx: "auto",
-                  }}
-                >
-                  {step.description}
-                </Typography>
-              </Box>
+              {/* Description */}
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "rgba(255, 255, 255, 0.7)",
+                  lineHeight: 1.7,
+                  maxWidth: 280,
+                  mx: "auto",
+                }}
+              >
+                {step.description}
+              </Typography>
+            </Box>
           ))}
         </Box>
       </Container>

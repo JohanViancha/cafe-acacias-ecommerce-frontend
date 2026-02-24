@@ -7,6 +7,7 @@ import CartLayout from "@/layouts/CartLayout";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Seo from "@/components/Shared/Seo";
+import { useLoading } from "@/contexts";
 
 const productCtrl = new Product();
 
@@ -16,6 +17,7 @@ export default function Cart() {
   } = useRouter();
   const [products, setProducts] = useState(null);
   const { cart } = useCart();
+  const { startLoading, stopLoading } = useLoading();
 
   const currentStep = Number(step);
 
@@ -24,6 +26,8 @@ export default function Cart() {
 
     (async () => {
       try {
+        startLoading();
+
         const data = [];
         for await (const item of cart) {
           const response = await productCtrl.getProductById(item.id);
@@ -32,6 +36,8 @@ export default function Cart() {
         setProducts(data);
       } catch (error) {
         console.error(error);
+      } finally {
+        stopLoading()
       }
     })();
   }, [cart]);

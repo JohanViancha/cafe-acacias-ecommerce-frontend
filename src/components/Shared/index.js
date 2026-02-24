@@ -7,3 +7,4 @@ export * from "./NoResult";
 export * from "./PaginationProducts";
 export * from "./SearchList";
 export * from "./Seo"
+export * from "./Notify"

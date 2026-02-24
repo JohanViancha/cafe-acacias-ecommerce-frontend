@@ -15,6 +15,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { useRouter } from "next/router";
 import Logo from "@/assets/logo.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const steps = [
   { label: "Carrito", icon: ShoppingCartIcon },
@@ -40,16 +41,17 @@ export default function HeaderCart() {
           py: 1,
         }}
       >
-        <Toolbar sx={{ minHeight: 80 }}>
+        <Toolbar sx={{ height: { xs: 64, md: 80 } }}>
           <Box display="flex" alignItems="center" gap={1}>
-            <Image
-              src={Logo}
-              alt="Logo del Café"
-              width={90}
-              height={90}
-              style={{ borderRadius: "50%" }}
-              href='/'
-            />
+            <Link href="/">
+              <Image
+                src={Logo}
+                alt="Logo del Café"
+                width={70}
+                priority
+                style={{ borderRadius: "50%" }}
+              />
+            </Link>
           </Box>
           <Box sx={{ width: "60%", margin: "auto" }}>
             <Stepper alternativeLabel activeStep={activeStep}>
@@ -63,7 +65,7 @@ export default function HeaderCart() {
                       sx={{
                         "& .MuiStepLabel-label": {
                           color: "#fff",
-                          fontSize: isActive ? "1rem" : "0.85rem",
+                          fontSize: isActive ? "0.9rem" : "0.75rem",
                           fontWeight: isActive ? 600 : 400,
                           transition: "all 0.3s ease",
                         },
@@ -82,8 +84,8 @@ export default function HeaderCart() {
                           return (
                             <Box
                               sx={{
-                                width: highlight ? 36 : 30,
-                                height: highlight ? 36 : 30,
+                                width: highlight ? 33 : 27,
+                                height: highlight ? 33 : 27,
                                 borderRadius: "50%",
                                 display: "flex",
                                 alignItems: "center",

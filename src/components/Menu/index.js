@@ -1,8 +1,5 @@
 import { Category } from "@/api";
-import {
-  ExpandLess,
-  ExpandMore
-} from '@mui/icons-material';
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import {
   Box,
@@ -102,13 +99,9 @@ function MenuApp({ isMobile, setDrawerOpen }) {
           <Box
             onClick={handleMenuClick}
             sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 0.5,
-              cursor: "pointer",
-              color: menuOpen
-                ? "primary.contrastText"
-                : "rgba(255, 255, 255, 0.8)",
+              position: "relative",
+              color: "rgba(255, 255, 255, 0.8)",
+              textDecoration: "none",
               fontSize: "0.875rem",
               fontWeight: 500,
               letterSpacing: "0.05em",
@@ -117,11 +110,27 @@ function MenuApp({ isMobile, setDrawerOpen }) {
               "&:hover": {
                 color: "primary.contrastText",
               },
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                bottom: -1,
+                left: 0,
+                width: "100%",
+                height: 5,
+                bgcolor: "#ffffff28",
+                transform: "scaleX(0)",
+                transformOrigin: "center",
+                transition: "transform 0.3s ease-out",
+              },
+              "&:hover::after": {
+                transform: "scaleX(1)",
+              },
             }}
           >
             Categorias
             <KeyboardArrowDown
               sx={{
+                position: "absolute",
                 fontSize: "1.25rem",
                 transition: "transform 0.2s",
                 transform: menuOpen ? "rotate(180deg)" : "rotate(0deg)",

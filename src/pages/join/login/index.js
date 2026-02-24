@@ -43,8 +43,8 @@ export default function Login() {
 
   const validationSchema = () => {
     return Yup.object({
-      identifier: Yup.string().required(true),
-      password: Yup.string().required(true),
+      identifier: Yup.string().required("El usuario es requerido", true),
+      password: Yup.string().required("La contraseña es requerida",true),
     });
   };
   const formik = useFormik({
@@ -92,6 +92,7 @@ export default function Login() {
             fullWidth
             onChange={formik.handleChange}
             error={formik.errors.identifier}
+            helperText={formik.errors.identifier}
           />
           <TextField
             label="Contraseña"
@@ -100,6 +101,7 @@ export default function Login() {
             onChange={formik.handleChange}
             error={formik.errors.password}
             type={showPassword ? "text" : "password"}
+            helperText={formik.errors.password}
             slotProps={{
               input: {
                 endAdornment: (

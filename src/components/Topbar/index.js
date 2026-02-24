@@ -30,6 +30,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
+import Link from "next/link";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -133,7 +134,9 @@ export default function TopBar({ isOpenSearch }) {
             sx={{ height: { xs: 64, md: 80 }, justifyContent: "space-between" }}
           >
             {/* Logo */}
-            <Image alt="Logo" width={70} priority src={Logo} href="/" />
+            <Link href={"/"}>
+              <Image alt="Logo" width={70} priority src={Logo} />
+            </Link>
 
             {isOpenSearch && (
               <Search>

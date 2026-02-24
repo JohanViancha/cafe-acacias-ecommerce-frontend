@@ -4,20 +4,22 @@ import { Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import AddressSelected from "./AddressSelected";
 import Summary from "./Summary";
+import { useRouter } from "next/router";
 
 export default function StepTwo({ products }) {
   const [addressSelected, setAddressSelected] = useState(null);
+  const router = useRouter()
+
+  if (!products) {
+    router.replace({ query: { ...router.query, step: 0 } });
+  };
 
   return (
     <>
-      <Typography variant="h6" fontWeight="bold" color="text.primary" mb={2}>
-        Dirección
-      </Typography>
-
       <Grid container spacing={4}>
         {/* 🟦 IZQUIERDA */}
         <Grid size={{ xs: 12, sm: 12, md: 6, lg: 7, xl: 8 }}>
-        <AddressSelected
+          <AddressSelected
             addressSelected={addressSelected}
             setAddressSelected={setAddressSelected}
           />

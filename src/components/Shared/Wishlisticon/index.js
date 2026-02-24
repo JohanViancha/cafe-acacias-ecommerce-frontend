@@ -7,21 +7,27 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton, Button } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useLoading, useNotify } from "@/contexts";
 
 const wishlistCtrl = new Wishlist();
 
 export default function WishListIcon({ productId, label, removeCallback }) {
   const [hasWishlist, setHasWishlist] = useState(null);
   const { user } = useAuth();
+  const { startLoading, stopLoading } = useLoading();
+  const { notify } = useNotify();
 
   useEffect(() => {
     (async () => {
       try {
+        startLoading;
         const response = await wishlistCtrl.check(user.documentId, productId);
         setHasWishlist(response);
       } catch (error) {
         setHasWishlist(false);
         console.error(error);
+      } finally {
+        stopLoading();
       }
     })();
   }, [productId]);
@@ -31,6 +37,7 @@ export default function WishListIcon({ productId, label, removeCallback }) {
 
     const response = await wishlistCtrl.add(user.documentId, productId);
     setHasWishlist(response);
+    notify("Se ha agregado el producto a la lista de deseos", "success");
   };
 
   const deleteWishlist = async (e) => {
@@ -39,6 +46,7 @@ export default function WishListIcon({ productId, label, removeCallback }) {
     try {
       await wishlistCtrl.delete(hasWishlist.documentId);
       setHasWishlist(false);
+      notify("Se ha eliminado el producto de la lista de deseos", "info");
 
       if (removeCallback) {
         removeCallback();
@@ -51,7 +59,12 @@ export default function WishListIcon({ productId, label, removeCallback }) {
   if (hasWishlist === null) return null;
 
   return label ? (
-    <Button onClick={deleteWishlist} fullWidth variant="outlined" startIcon={<DeleteIcon />}>
+    <Button
+      onClick={deleteWishlist}
+      fullWidth
+      variant="outlined"
+      startIcon={<DeleteIcon />}
+    >
       {label}
     </Button>
   ) : (

@@ -5,11 +5,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Address } from "@/api/address";
 import { useAuth } from "@/hooks";
+import { useNotify } from "@/contexts";
 
 const addressCtrl = new Address();
 
 export default function AddressForm({ onClose, onReload, addressId, address }) {
   const { user } = useAuth();
+  const { notify } = useNotify();
 
   const initialValues = (address) => {
     return {
@@ -49,9 +51,12 @@ export default function AddressForm({ onClose, onReload, addressId, address }) {
 
         formik.handleReset();
         onReload();
-        onClose();
+        notify("La direacción ha sido creada correctamente", "success");
       } catch (error) {
         console.error(error);
+        notify("La direacción no pudo crearse, intenta de nuevo", "error");
+      } finally {
+        onClose();
       }
     },
   });
@@ -62,9 +67,6 @@ export default function AddressForm({ onClose, onReload, addressId, address }) {
       noValidate
       onSubmit={formik.handleSubmit}
       autoComplete="off"
-      sx={{
-        p: 3,
-      }}
     >
       <Grid container spacing={2}>
         {/* Título 100% */}

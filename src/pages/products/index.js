@@ -22,6 +22,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { Product } from "@/api/product";
 import { Category } from "@/api";
+import { useLoading } from "@/contexts";
 
 const productCtrl = new Product();
 const categoryCtrl = new Category();
@@ -46,30 +47,34 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
+  const { startLoading, stopLoading } = useLoading();
 
   useEffect(() => {
     (async () => {
       try {
+        startLoading();
         const responseProducts = await productCtrl.getProducts();
         const responseCategory = await categoryCtrl.getAll();
         setProducts(responseProducts.data);
         setCategories(responseCategory.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        stopLoading();
       }
     })();
   }, []);
 
   if (!products || !categories) return null;
 
-  const [searchQuery,   setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [roast, setRoast] = useState("all");
   const [sortBy, setSortBy] = useState("featured");
   const [priceRange, setPriceRange] = useState([20000, 50000]);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-   const [openSort, setOpenSort] = useState(false);
+  const [openSort, setOpenSort] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -268,7 +273,7 @@ const Products = () => {
         <Box
           sx={{
             pt: 4,
-            pb:3,
+            pb: 3,
             bgcolor: "primary.main",
             color: "primary.contrastText",
           }}
@@ -291,7 +296,8 @@ const Products = () => {
                 lineHeight: 1.8,
               }}
             >
-              Descubre nuestra colección completa de cafés cuidadosamente cultivados y tostados en las montañas de Lebrija.
+              Descubre nuestra colección completa de cafés cuidadosamente
+              cultivados y tostados en las montañas de Lebrija.
             </Typography>
           </Container>
         </Box>

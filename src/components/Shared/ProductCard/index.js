@@ -1,17 +1,16 @@
-import Image from "next/image";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Box,
-  Chip,
-  IconButton,
-  CardActionArea,
-} from "@mui/material";
-import { ShoppingBag } from "@mui/icons-material";
-import { customColors } from "@/theme/theme";
+import { useNotify } from "@/contexts";
 import { useCart } from "@/hooks/useCart";
+import { customColors } from "@/theme/theme";
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardContent,
+  Chip,
+  Typography
+} from "@mui/material";
+import Image from "next/image";
 
 const ProductCard = ({
   documentId,
@@ -25,9 +24,11 @@ const ProductCard = ({
   origin = "Lebrija",
 }) => {
   const { addCart } = useCart();
+  const { notify } = useNotify();
 
   const addCartWrapper = () => {
     addCart(documentId, 1);
+    notify("El producto se agregó al carrito de compras", "success");
   };
 
   const formatPrice = (value) =>
@@ -93,29 +94,6 @@ const ProductCard = ({
               }}
             />
           )}
-
-          {/* Quick add */}
-          <IconButton
-            className="quick-add"
-            sx={{
-              position: "absolute",
-              bottom: 16,
-              right: 16,
-              width: 48,
-              height: 48,
-              bgcolor: "primary.main",
-              color: "white",
-              opacity: 0,
-              transform: "translateY(16px)",
-              transition: "all 0.3s ease",
-              zIndex: 2,
-              "&:hover": {
-                bgcolor: customColors.accent,
-              },
-            }}
-          >
-            <ShoppingBag />
-          </IconButton>
         </Box>
       </CardActionArea>
 

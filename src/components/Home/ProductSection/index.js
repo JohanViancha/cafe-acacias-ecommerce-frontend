@@ -8,8 +8,6 @@ import { useEffect, useState } from "react";
 
 const productCtrl = new Product();
 
-
-
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
 
@@ -97,38 +95,36 @@ const ProductsSection = () => {
             href="/products"
             underline="none"
             sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 1,
-              fontWeight: 500,
-              color: "primary.main",
               position: "relative",
-
+              color: "primary.main",
+              textDecoration: "none",
+              fontSize: "0.875rem",
+              fontWeight: 500,
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              transition: "color 0.2s",
+              "&:hover": {
+                color: "primary.main",
+              },
               "&::after": {
                 content: '""',
                 position: "absolute",
+                bottom: -1,
                 left: 0,
-                bottom: -2,
                 width: "100%",
-                height: 1,
-                bgcolor: "currentColor",
+                height: 5,
+                bgcolor: "primary.main",
                 transform: "scaleX(0)",
-                transformOrigin: "right",
-                transition: "transform 0.3s ease",
+                transformOrigin: "center",
+                transition: "transform 0.3s ease-out",
               },
-
-              "&:hover": {
-                color: customColors.accent,
-              },
-
               "&:hover::after": {
                 transform: "scaleX(1)",
-                transformOrigin: "left",
               },
             }}
           >
             Ver todos los productos
-            <ArrowForward sx={{ fontSize: 18 }} />
+            <ArrowForward sx={{ fontSize: 18, position: "absolute", top: 0 }} />
           </Link>
         </Box>
       </Container>

@@ -28,7 +28,7 @@ export default function Summary({ products, addressSelected }) {
   const initBoldCheckout = () => {
     if (
       document.querySelector(
-        'script[src="https://checkout.bold.co/library/boldPaymentButton.js"]'
+        'script[src="https://checkout.bold.co/library/boldPaymentButton.js"]',
       )
     ) {
       console.warn("Bold Checkout script is already loaded.");
@@ -54,7 +54,7 @@ export default function Summary({ products, addressSelected }) {
         (product.price - (product?.discount * product?.price) / 100) *
           product.quantity,
 
-      0
+      0,
     );
 
     setSubtotal(subtotal);
@@ -72,7 +72,7 @@ export default function Summary({ products, addressSelected }) {
         products,
         user.id,
         currency,
-        addressSelected
+        addressSelected,
       );
 
       const checkout = new BoldCheckout({
@@ -97,9 +97,10 @@ export default function Summary({ products, addressSelected }) {
         currency: currency,
         integritySignature: order.hashIntegraty,
         amount: order.totalPayment,
-        redirectionUrl: "https://cafe-acacias.up.railway.app/cart?step=2",
-        originUrl: "https://cafe-acacias.up.railway.app",
-        renderMode: 'embedded',
+        redirectionUrl:
+          "https://sandybrown-sardine-468944.hostingersite.com/cart?step=2",
+        originUrl: "https://sandybrown-sardine-468944.hostingersite.com",
+        renderMode: "embedded",
       });
 
       checkout.open();
